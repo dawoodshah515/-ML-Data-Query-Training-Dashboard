@@ -38,8 +38,8 @@ project/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/dawoodshah515/Project-11-ML-Data-Query-Training-Dashboard.git
-cd Project-11-ML-Data-Query-Training-Dashboard
+git clone https://github.com/dawoodshah515/-ML-Data-Query-Training-Dashboard.git
+cd -ML-Data-Query-Training-Dashboard
 ```
 
 2. Install dependencies:
