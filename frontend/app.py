@@ -10,9 +10,13 @@ import pandas as pd
 import json
 from typing import Dict, Any
 
-
-# Configuration
-API_BASE_URL = "http://localhost:8000"
+# Import configuration
+try:
+    from config import API_BASE_URL
+except ImportError:
+    # Fallback if config.py doesn't exist
+    API_BASE_URL = "http://localhost:8000"
+    print("[WARNING] config.py not found, using default localhost:8000")
 st.set_page_config(
     page_title="ML Data Query & Training Dashboard",
     page_icon="🤖",
