@@ -288,7 +288,11 @@ if uploaded_file is not None:
                     st.error(f"❌ Upload failed: {response.json().get('detail', 'Unknown error')}")
     
     except Exception as e:
-        st.error(f"❌ Error reading file: {str(e)}")
+        error_msg = str(e)
+        if "Connection refused" in error_msg and "localhost" in API_BASE_URL:
+            st.error(f"❌ **Connection Failed**\n\nThe app is trying to connect to `{API_BASE_URL}`, but the connection was refused.\n\n**Why is this happening?**\nYou are likely running this app on the Cloud, but it's trying to connect to your *local* computer (localhost), which it cannot reach.\n\n**How to fix:**\n1. Deploy your backend to a cloud provider (like Render or Railway).\n2. Go to your Streamlit App Settings -> Secrets.\n3. Add `API_BASE_URL = 'https://your-backend-url.com'`.")
+        else:
+            st.error(f"❌ Error reading file: {error_msg}")
 
 st.markdown("---")
 
@@ -314,7 +318,11 @@ with col1:
                     st.error(f"❌ Training failed: {error_detail}")
             
             except requests.exceptions.RequestException as e:
-                st.error(f"❌ Connection error: {str(e)}\n\nMake sure the FastAPI server is running on port 8000.")
+                error_msg = str(e)
+                if "Connection refused" in error_msg and "localhost" in API_BASE_URL:
+                    st.error(f"❌ **Connection Failed**\n\nThe app is trying to connect to `{API_BASE_URL}`, but the connection was refused.\n\n**Why is this happening?**\nYou are likely running this app on the Cloud, but it's trying to connect to your *local* computer (localhost), which it cannot reach.\n\n**How to fix:**\n1. Deploy your backend to a cloud provider (like Render or Railway).\n2. Go to your Streamlit App Settings -> Secrets.\n3. Add `API_BASE_URL = 'https://your-backend-url.com'`.")
+                else:
+                    st.error(f"❌ Connection error: {error_msg}\n\nMake sure the Backend server is running.")
 
 with col2:
     st.info("**Training Info**\n\n✓ Auto-detects target column\n\n✓ Handles missing values\n\n✓ Saves model as model.pkl")
